@@ -1,4 +1,5 @@
 # 最初の設定
+## 大学の学科計算機室で動かす場合
  ~/.bash_profileというファイルを開き（なければ作る）、以下の１行を足す
  ```
  export PATH=$PATH:~chiemi/lib/npm/bin
@@ -8,7 +9,10 @@
  ```
  % source ~/.bash_profile
  ```
- 
+
+## 自分のPCで動かす場合
+* Node.js をインストール https://nodejs.org/ja/
+
 # とりあえず動かしてみる
  1. 必要なモジュールをインストールする
  ```
