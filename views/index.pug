@@ -10,8 +10,7 @@ html
             each row in results
                 div(class="row")
                     div(class="col 12")
-                        - var imgpath = "icons/"+row['account']+".png"
-                        img(class="icon" src=imgpath)
+                        img(class="icon" src="icons/"+row['account']+".png")
                     div(class="col s11")
                         div(class="tweetinfo") #{row['name']} @#{row['account']} #{row['datetime']}
                         div #{row['content']}
