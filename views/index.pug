@@ -2,16 +2,17 @@ html
     head
         link(ref="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons")
         link(rel="stylesheet" href="css/materialize.min.css" media="screen,projection")
+        link(rel="stylesheet" href="css/app.css")
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
     body
         script(type="text/javascript" src="js/materialize.min.js")
         div(class="container")
             each row in results
                 div(class="row")
-                    div("col s2")
+                    div(class="col 12")
                         - var imgpath = "icons/"+row['account']+".png"
-                        img(src=imgpath)
-                    div("col s10")
+                        img(class="icon" src=imgpath)
+                    div(class="col s11")
                         div(class="tweetinfo") #{row['name']} @#{row['account']} #{row['datetime']}
                         div #{row['content']}
 
