@@ -7,9 +7,12 @@ html
         script(type="text/javascript" src="js/materialize.min.js")
         div(class="container")
             each row in results
-                div(class="tweet")
-                    div(class="tweetinfo") #{row['name']} @#{row['account']} #{row['datetime']}
-                    div(class="row")
-                        div(class="col s10 offset-s1 content") #{row['content']}
+                div(class="row")
+                    div("col s2")
+                        - var imgpath = "icons/"+row['account']+".png"
+                        img(src=imgpath)
+                    div("col s10")
+                        div(class="tweetinfo") #{row['name']} @#{row['account']} #{row['datetime']}
+                        div #{row['content']}
 
         
