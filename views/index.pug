@@ -7,6 +7,10 @@ html
     body
         script(type="text/javascript" src="js/materialize.min.js")
         div(class="container")
+            form(method='post', action='/tweet')
+                label いまどうしてる: 
+                input(type='text', name='tweet_content')
+                input(type='submit', value='送信')
             each row in results
                 div(class="row")
                     div(class="col 12")
