@@ -1,11 +1,12 @@
 var sqlite3 = require('sqlite3').verbose()
-var bodyParser = require('body-parser')
 const express = require('express')
 const app = express()
 app.use(express.static('public'));
 app.set('view engine', 'pug')
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
-app.use(bodyParser.json())
+var bodyParser = require('body-parser')
+var urlencodedParser = bodyParser.urlencoded({ extended: true })
+app.use(urlencodedParser);
+app.use(bodyParser.json());
 
 var db = new sqlite3.Database('twitter.db');
 var account = 'mob1';
@@ -13,10 +14,15 @@ var account = 'mob1';
 app.get('/', function (req, res, next) {
     var query = "\
         SELECT t.account, u.name, t.datetime, t.content\
-        FROM tweet t, follow f, user u\
-        WHERE t.account = u.account and f.follower_account = 'mob1' and f.followee_account = t.account;\
+        FROM tweet t, user u\
+        WHERE ( t.account = '"+account+"' \
+          or  t.account IN (SELECT f.followee_account \
+                             FROM follow f \
+                             WHERE f.follower_account = '"+account+"')) \
+          and t.account = u.account \
+        ORDER BY t.datetime desc; \
         ";
-        console.log("DBG:" + query);
+    console.log(query);
     db.all(query, {}, function (err, rows) {
         if (err) {
             console.log("ERROR: " + err.message);
@@ -29,10 +35,6 @@ app.get('/', function (req, res, next) {
 });
 
 app.post('/tweet', function (req, res, next) {
-
-    for (key in req.body) {
-        console.log(key, '=', req.body[key]); // コンソール出力
-    }
 
     datetime = getCurrentTime();
     content = req.body['tweet_content'];
