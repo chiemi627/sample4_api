@@ -13,7 +13,9 @@ var account = 'mob1';
 
 app.get('/', function (req, res, next) {
     var query = "\
-        SELECT t.account, u.name, t.datetime, t.content\
+        SELECT t.account, u.name, t.datetime, t.content,\
+               (SELECT count(*) FROM favorite WHERE tweet_id=t.id) as fav_count, \
+               (SELECT count(*) FROM tweet t2 WHERE retweeted_id=t.id) as ret_count \
         FROM tweet t, user u\
         WHERE ( t.account = '"+account+"' \
           or  t.account IN (SELECT f.followee_account \
